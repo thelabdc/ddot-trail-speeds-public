@@ -1,47 +1,64 @@
-# DDOT-trail-speeds
-@authors
+# DDOT-trail-speeds-public
 CRediT statement (Roles modified for code/analysis):
-- (Collin Brown)[https://thelabprojects.dc.gov/collin-brown]: Data curation (original draft), Data analysis (original draft), Methodology 
-- (Alyssa Huberts)[https://thelabprojects.dc.gov/alyssa-huberts]: Data curation (review and editing), Data analysis (review and editing, original draft), Methodology 
-- (Ryan T Moore)[https://thelabprojects.dc.gov/ryan-moore]: Supervision, methdology
+- [Collin Brown](https://thelabprojects.dc.gov/collin-brown): Data curation (original draft), Data analysis (original draft), Methodology 
+- [Alyssa Huberts](https://thelabprojects.dc.gov/alyssa-huberts): Data curation (review and editing), Data analysis (review and editing, original draft), Methodology 
+- [Ryan T Moore](https://thelabprojects.dc.gov/ryan-moore): Supervision, methdology
 
-## Introduction
+## Overview
 
-This repo contains R scripts for randomizing speed feedback sign messages posted on the Metropolitan Branch Trail, as well as scripts used to analyze pilot data.
+This repository contains the R workflow for the Metropolitan Branch Trail speed feedback sign pilot. It includes scripts to randomize sign messages, clean and prepare speed data, conduct baseline and intervention analyses, estimate event-study models, and generate figures.
 
-#### Requirements:
+The analysis focuses on speed feedback sign data from Rhode Island Ave and Alethia Tanner Park, with additional downstream counter analysis at Tanner Park.
 
-The primary packages (or groups of packages) used here for R are:
-- `tidyverse` for data cleaning, manipulation, and modeling
-- `randomizr` for the sign message block randomization
-- `openmeteo` (requires manual installation; depreciated by CRAN)
-- `tidymodels` for the event study code
+To see the associated slide deck for this project, click here. (link TBD)
 
-The relevant packages and modules are included at the top of each R script.
+## Requirements
 
-## Organization
+Core R packages include:
 
-The repo is organized in three primary directories:
-- `code` includes scripts needed to run the message randomization
-- `docs` 
-- `figs` 
+- `tidyverse`
+- `data.table`
+- `randomizr`
+- `here`
+- `knitr`
+- `openmeteo`
+- `broom`
+- `hms`
+- `scales`
+- `quarto`
 
-Additionally, this repository includes `README`, `.gitignore`, and `.Rproj` 
-files.
+Running `code/00_setup.R` will install required packages, create output folders, and define helper functions.
 
-## `/code/`
+## Repository Structure
 
-This directory includes these files:
+Scripts are numbered in the order they should be run:
 
-- `00_package-installation.R` installs packages and dependencies manually that were depreciated by CRAN but are necessary to run analysis code.
-- `01_randomize-message.R` replicates block randomization code, including timestamped seeds to denote when the code was run. This code was run twice to account for an extension of the pilot.
-- `02_data_cleaning.R` loads in data files, combines them into one main file, manipulates the variables to be useful for analysis, adds weather data, computes volume, and joins message assignment to each observation.
-- `03_baseline_data_analyses.R` performs analyses on the baseline data period (October 23-November 9) to explore what data is missing, as well as user volume and speed trends at each location prior to the start of the intervention.
-- `04_descriptive_analyses.R` displays all descriptive tables and plots.
-- `05_event_study.R` includes main event study code for primary pilot analyses.
-- `06_exploratory_analyses.R` 
+- `00_setup.R` — One-time setup for this repo. Installs required CRAN packages, labtoolbox, and alerts user of missing non-CRAN packages. Sets up standard output folders (docs, figs, tables) and helper functions to save tables and figures directly to the repo. NON-CRAN PACKAGES MUST BE INSTALLED MANUALLY:
+  - This project uses three packages that will need to be installed manually: `labtoolbox`, `openmeteo`, and `tibblify`.
+  - Install `labtoolbox` from GitHub using `devtools`:
+    ```
+    install.packages("devtools")
+    devtools::install_github("thelabdc/labtoolbox")
+    ```
+  - Install `tibblify` then `openmeteo` through the CRAN archive or manually with:
+    ```
+      install.packages("pak")
+      pak::pak("wranglezone/tibblify")
+      library(tibblify)
+      install.packages("remotes")
+      remotes::install_github("tpisel/openmeteo")
+      library(openmeteo)
+    ```
+- `01_randomize_message.R` — Create a reproducible day-by-day message assignment for each sign.
+- `02_sfs_data_cleaning.R` — Load sign radar data, join with message randomziation list, create analysis variables, and add weather data.
+- `03_downstream_counter_cleaning.R` — Loads downstream counter data, join with message sign data, create analysis variables, and add weather data.
+- `04_descriptive_analyses.R` — Baseline (pre-intervention) diagnostics and descriptive plots.
+- `05_event_study.R` — Estimate weekly changes in speed (mph) after the intervention, separately by location using an event study specification with controls.
+- `06_downstream_analysis.R` — Uses the counter to replicate the event studies and also run a DID between counter and SFS
+- `07_message_testing.R` — Test whether upstream message ("text" vs "image") relates to downstream avg speed (15-min bins).
+- `run_all.R` —  Runs all files in repo and reproduces workflow.
 
-## `/data/`
+## Data
 
-This directory contains all data pulls supplied by SaferStreet Solutions. "Gold Dragon" denotes Alethia Tanner Park sign data, while "Gold Goose" denotes Rhode Island Ave sign data. 
-File naming convention is as follows: location-id_through_YYYY-MM-DD_HHMM.csv
+The `data/` directory in the private version of this repository contains speed feedback sign data, message randomization outputs, and downstream counter data.
+
