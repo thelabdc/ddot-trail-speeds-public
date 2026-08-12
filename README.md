@@ -1,6 +1,6 @@
 # DDOT-trail-speeds-public
 CRediT statement (Roles modified for code/analysis):
-- [Collin Brown](https://thelabprojects.dc.gov/collin-brown): Data curation (original draft), Data analysis (original draft), Methodology 
+- [Collin Brown](https://github.com/clb3122): Data curation (original draft), Data analysis (original draft), Methodology 
 - [Alyssa Huberts](https://thelabprojects.dc.gov/alyssa-huberts): Data curation (review and editing), Data analysis (review and editing, original draft), Methodology 
 - [Ryan T Moore](https://thelabprojects.dc.gov/ryan-moore): Supervision, methdology
 
