@@ -2,7 +2,7 @@
 CRediT statement (Roles modified for code/analysis):
 - [Collin Brown](https://github.com/clb3122): Data curation (original draft), Data analysis (original draft), Methodology 
 - [Alyssa Huberts](https://thelabprojects.dc.gov/alyssa-huberts): Data curation (review and editing), Data analysis (review and editing, original draft), Methodology 
-- [Ryan T Moore](https://thelabprojects.dc.gov/ryan-moore): Supervision, methdology
+- [Ryan T Moore](https://thelabprojects.dc.gov/ryan-moore): Supervision, Methdology
 
 ## Overview
 
@@ -16,16 +16,16 @@ To see the associated slide deck for this project, click here. (link TBD)
 
 Core R packages include:
 
-- `tidyverse`
+- `broom`
 - `data.table`
-- `randomizr`
 - `here`
+- `hms`
 - `knitr`
 - `openmeteo`
-- `broom`
-- `hms`
-- `scales`
 - `quarto`
+- `randomizr`
+- `scales`
+- `tidyverse`
 
 Running `code/00_setup.R` will install required packages, create output folders, and define helper functions.
 
@@ -33,21 +33,18 @@ Running `code/00_setup.R` will install required packages, create output folders,
 
 Scripts are numbered in the order they should be run:
 
-- `00_setup.R` — One-time setup for this repo. Installs required CRAN packages, labtoolbox, and alerts user of missing non-CRAN packages. Sets up standard output folders (docs, figs, tables) and helper functions to save tables and figures directly to the repo. NON-CRAN PACKAGES MUST BE INSTALLED MANUALLY:
-  - This project uses three packages that will need to be installed manually: `labtoolbox`, `openmeteo`, and `tibblify`.
-  - Install `labtoolbox` from GitHub using `devtools`:
+- `00_setup.R` — One-time setup for this repo. Installs required CRAN packages, `{labtoolbox}`, and alerts user of missing non-CRAN packages. Sets up standard output folders (docs, figs, tables) and helper functions to save tables and figures directly to the repo. NON-CRAN PACKAGES MUST BE INSTALLED MANUALLY:
+  - This project uses three packages that will need to be installed manually: `{labtoolbox}`, `{openmeteo}`, and `{tibblify}`.
+  - Install `{sysfonts}` and `{labtoolbox}` from GitHub:
     ```
-    install.packages("devtools")
-    devtools::install_github("thelabdc/labtoolbox")
+    install.packages("pak")
+    pak::pak("sysfonts")
+    pak::pak("thelabdc/labtoolbox")
     ```
-  - Install `tibblify` then `openmeteo` through the CRAN archive or manually with:
+  - Install `{openmeteo}` and `{tibblify}` with:
     ```
-      install.packages("pak")
+      pak::pak("tpisel/openmeteo")
       pak::pak("wranglezone/tibblify")
-      library(tibblify)
-      install.packages("remotes")
-      remotes::install_github("tpisel/openmeteo")
-      library(openmeteo)
     ```
 - `01_randomize_message.R` — Create a reproducible day-by-day message assignment for each sign.
 - `02_sfs_data_cleaning.R` — Load sign radar data, join with message randomziation list, create analysis variables, and add weather data.
