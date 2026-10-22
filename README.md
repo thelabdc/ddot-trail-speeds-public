@@ -10,7 +10,7 @@ This repository contains the R workflow for the Metropolitan Branch Trail speed 
 
 The analysis focuses on speed feedback sign data from Rhode Island Ave and Alethia Tanner Park, with additional downstream counter analysis at Tanner Park.
 
-To see the associated slide deck for this project, click here. (link TBD)
+To see the associated slide deck for this project, click [here](https://thelabprojects.dc.gov/trail-speeds).
 
 ## Requirements
 
